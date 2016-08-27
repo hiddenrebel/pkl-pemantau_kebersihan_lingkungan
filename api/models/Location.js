@@ -8,7 +8,7 @@
 module.exports = {
 
   attributes: {
-  		timestamp 	: { type: 'string'},
+  		time_update	: { type: 'integer'},
 		latitude	: { type: 'float' },
 		longitude	: { type: 'float' }
 		

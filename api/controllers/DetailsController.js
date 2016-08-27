@@ -11,10 +11,10 @@ module.exports = {
 		console.log('request:',params);
 		// Location details
 		var loc = params.location
-		var time = params.timestamp
+		var time_update = params.timestamp
 		var latitude = loc[0].latitude
 		var longitude = loc[1].longitude
-		Location.create({timestamp:time,
+		Location.create({time_update:time_update,
 						latitude:latitude,
 						longitude:longitude}).exec(function createCB(err,created){});
 		// Sensor details
@@ -49,20 +49,20 @@ module.exports = {
 						value:sensorInfo.value,
 						satuan:sensorInfo.satuan}).exec(function createCB(err,created){});
 			}
-			console.log(msg,' levels stored');
+			console.log(msg,' details stored');
 		}
 		return res.json('200',{message:sensorInfo.sensor+' info collected and stored'});
 	},
 
 	getLatestLocations: function(req, res) {
-		var timestamp = Math.round(+new Date()/1000); console.log('timestamp:',timestamp);
-		var time_last = timestamp-(2*60);
-		Location.find({ where: { timestamp:{'>=':time_last} }, limit: 5 }); console.log('Location:',Location);
-		//for(var i=0; i<len; i++) {
-		//	console.log('locations:',len.longitude);
-		//	console.log('locations:',len.latitude);
-		//}
-		return res.json('200',{timestamp});
+		var timestamp = Math.round(+new Date()/1000); 
+		var time_last = timestamp-(10*60); console.log('timestamp:',time_last);
+		Location.find({where: {timestamp: {'<':time_last} }, limit: 5 }).exec(function (err, latestLocations){
+			if (err) {
+			    return res.serverError(err);
+			}
+		  	return res.json(latestLocations);
+		});
 	}
 };
 
