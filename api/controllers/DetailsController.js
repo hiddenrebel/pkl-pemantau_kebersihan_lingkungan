@@ -11,9 +11,10 @@ module.exports = {
 		console.log('request:',params);
 		// Location details
 		var loc = params.location
-		var latitude = loc[0]
-		var longitude = loc[1]
-		Location.create({time:params.timestamp,
+		var time = params.timestamp
+		var latitude = loc[0].latitude
+		var longitude = loc[1].longitude
+		Location.create({timestamp:time,
 						latitude:latitude,
 						longitude:longitude}).exec(function createCB(err,created){});
 		// Sensor details
