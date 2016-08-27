@@ -52,6 +52,17 @@ module.exports = {
 			console.log(msg,' levels stored');
 		}
 		return res.json('200',{message:sensorInfo.sensor+' info collected and stored'});
+	},
+
+	getLatestLocations: function(req, res) {
+		var timestamp = Math.round(+new Date()/1000); console.log('timestamp:',timestamp);
+		var time_last = timestamp-(2*60);
+		Location.find({ where: { timestamp:{'>=':time_last} }, limit: 5 }); console.log('Location:',Location);
+		//for(var i=0; i<len; i++) {
+		//	console.log('locations:',len.longitude);
+		//	console.log('locations:',len.latitude);
+		//}
+		return res.json('200',{timestamp});
 	}
 };
 

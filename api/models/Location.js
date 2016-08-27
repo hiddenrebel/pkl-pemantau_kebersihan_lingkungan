@@ -9,8 +9,8 @@ module.exports = {
 
   attributes: {
   		timestamp 	: { type: 'string'},
-		latitude	: { type: 'string' },
-		longitude	: { type: 'string' }
+		latitude	: { type: 'float' },
+		longitude	: { type: 'float' }
 		
   }
 };
