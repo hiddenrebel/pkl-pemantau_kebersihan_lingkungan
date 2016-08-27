@@ -1,0 +1,30 @@
+    <div id="sensor-humidity"><div>
+    <script type="text/javascript">
+
+      google.charts.setOnLoadCallback(drawSensor_Humidity);
+      // Callback that draws the pie chart for Sarah's pizza.
+      function drawSensor_Humidity() {
+
+        // Create the data table for Sarah's pizza.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', 'Slices');
+        data.addRows([
+          ['Mushrooms', 1],
+          ['Onions', 1],
+          ['Olives', 2],
+          ['Zucchini', 2],
+          ['Pepperoni', 1]
+        ]);
+
+        // Set options for Sarah's pie chart.
+        var options = {title:'How Much Pizza Sarah Ate Last Night',
+                       width:800,
+                       height:400};
+
+        // Instantiate and draw the chart for Sarah's pizza.
+          var chart = new google.visualization.PieChart(document.getElementById('sensor-humidity'));
+        chart.draw(data, options);
+      }
+
+    </script>

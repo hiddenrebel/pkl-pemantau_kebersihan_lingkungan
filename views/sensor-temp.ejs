@@ -1,0 +1,28 @@
+    <div id="sensor-temperatur"></div>
+    <script type="text/javascript">
+google.charts.setOnLoadCallback(drawSensor_Temp);
+// Callback that draws the pie chart for Anthony's pizza.
+function drawSensor_Temp() {
+
+    // Create the data table for Anthony's pizza.
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'Topping');
+    data.addColumn('number', 'Slices');
+    data.addRows([
+        ['Mushrooms', 2],
+        ['Onions', 2],
+        ['Olives', 2],
+        ['Zucchini', 0],
+        ['Pepperoni', 3]
+    ]);
+
+    // Set options for Anthony's pie chart.
+    var options = {title:'How Much Pizza Anthony Ate Last Night',
+                   width:800,
+                   height:400};
+
+    // Instantiate and draw the chart for Anthony's pizza.
+    var chart = new google.visualization.PieChart(document.getElementById('sensor-temperatur'));
+    chart.draw(data, options);
+}
+     </script>
