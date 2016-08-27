@@ -8,10 +8,10 @@
 module.exports = {
 
   attributes: {
-  		speed		: { type: 'string' },
+  		timestamp 	: { type: 'string'},
 		latitude	: { type: 'string' },
-		longitude	: { type: 'string' },
-		time 		: { type: 'string'}
+		longitude	: { type: 'string' }
+		
   }
 };
 

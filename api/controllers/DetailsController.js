@@ -8,45 +8,49 @@
 module.exports = {
 	saveDetails: function (req, res) {
 		var params = req.params.all()
-		
+		console.log('request:',params);
 		// Location details
 		var loc = params.location
-		Location.create({time:loc.time,
-						latitude:loc.latitude,
-						longitude:loc.longitude,
-						speed:loc.speed}).exec(function createCB(err,created){});
+		var latitude = loc[0]
+		var longitude = loc[1]
+		Location.create({time:params.timestamp,
+						latitude:latitude,
+						longitude:longitude}).exec(function createCB(err,created){});
 		// Sensor details
-		var arr = params.sensor
+		var arr = params.sensors
 		var len=arr.length;
 		for(var i=0; i<len; i++) {
 			var sensorInfo = arr[i]
+			var msg = sensorInfo.sensor
+			console.log('storing ',msg,' levels...');
 			switch(sensorInfo.sensor) {
-				case "humidity":
+				case "HD":
 					Humidity.create({
 						sensor:sensorInfo.sensor,
 						value:sensorInfo.value,
 						satuan:sensorInfo.satuan}).exec(function createCB(err,created){});
 						break;
-				case "temperature":
+				case "TR":
 					Temperature.create({
 						sensor:sensorInfo.sensor,
 						value:sensorInfo.value,
 						satuan:sensorInfo.satuan}).exec(function createCB(err,created){});
 						break;
-				case "Colevel":
+				case "CO":
 					Colevel.create({
 						sensor:sensorInfo.sensor,
 						value:sensorInfo.value,
 						satuan:sensorInfo.satuan}).exec(function createCB(err,created){});
 					break;
-				case "airquality":
+				case "AQ":
 					Airquality.create({
 						sensor:sensorInfo.sensor,
 						value:sensorInfo.value,
 						satuan:sensorInfo.satuan}).exec(function createCB(err,created){});
 			}
+			console.log(msg,' levels stored');
 		}
-		return res.json('200',{message:sensorInfo.sensor+' info collected and stored '});
+		return res.json('200',{message:sensorInfo.sensor+' info collected and stored'});
 	}
 };
 
