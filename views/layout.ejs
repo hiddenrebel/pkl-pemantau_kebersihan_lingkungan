@@ -5,8 +5,24 @@
 
     <!-- Viewport mobile tag for sensible mobile support -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
+    <!--STYLES-->
+    <link rel="stylesheet" href="/styles/importer.css">
+    <link rel="stylesheet" href="/styles/material-font.css">
+    <link rel="stylesheet" href="/styles/materialize.min.css">
+    <!--STYLES END-->
 
+    <!--SCRIPTS-->
+    <script src="/js/dependencies/sails.io.js"></script>
+    <script src="/js/dependencies/jQuery.js"></script>
+    <script src="/js/dependencies/materialize.min.js"></script>
+    <script src="/js/jquery.flot.min.js"></script>
+    <script src="/js/loader.js"></script>
+    <!--SCRIPTS END-->
     <!--
         Stylesheets and Preprocessors
         ==============================
@@ -28,12 +44,19 @@
             + Use a different or additional preprocessor, like SASS, SCSS or Stylus
     -->
 
-    <!--STYLES-->
-    <link rel="stylesheet" href="/styles/importer.css">
-    <!--STYLES END-->
   </head>
 
   <body>
+    <nav>
+      <div class="nav-wrapper">
+        <a href="" class="brand-logo">Logo</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li><a href="">sass</a></li>
+          <li><a href="">sass <span class="new badge">4</span></a></li>
+          <li><a href="">sass</a></li>
+        </ul>
+      </div>
+    </nav>
     <%- body %>
 
 
@@ -87,8 +110,5 @@
 
     -->
 
-    <!--SCRIPTS-->
-    <script src="/js/dependencies/sails.io.js"></script>
-    <!--SCRIPTS END-->
   </body>
 </html>

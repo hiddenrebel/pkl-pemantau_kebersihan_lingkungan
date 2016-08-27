@@ -1,0 +1,32 @@
+    <div id="placeholder" style="width:600px;height:300px"></div>
+    <script type="text/javascript">
+
+// var socket = io.connect('http://localhost:7878');
+// socket.on('chatting', function (data) {
+//     console.log(data);
+//     socket.emit('ask_chat');
+// });
+// socket.emit('ask_chat');
+
+io.socket.get('/monitor/subscribe', function(data, jwr) {
+    io.socket.on('new_entry', function(entry) {
+        console.log(entry);
+    })
+})
+
+// io.sails.url = 'https://localhost:1337';
+// io.socket.on('chatting', function(){
+//     io.socket.get('/monitor/index');
+//     io.socket.broadcast('ask_chat');
+//     console.log('wow')
+// });
+// io.socket.broadcast('ask_chat');
+
+    var data = [];
+for (i = 0; i < 4; i++) {
+    var x = [Math.floor((Math.random() * 10) + 1),Math.floor((Math.random() * 10) + 1)];
+    var y = [Math.floor((Math.random() * 10) + 1),Math.floor((Math.random() * 10) + 1)];
+    data.push([x,y]);
+}
+    $.plot($("#placeholder"),  data , { yaxis: { max: 30 } });
+    </script>
