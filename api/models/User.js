@@ -11,6 +11,10 @@ module.exports = {
       name: { type: 'string' },
       email: { type: 'email' },
       age: { type: 'integer' }
-  }
+  },
+    afterCreate: function(entry, cb) {
+        sails.sockets.broadcast('feed', 'new_entry', entry);
+        cb();
+    }
 };
 

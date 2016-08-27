@@ -1,28 +1,34 @@
-    <div id="sensor-temperatur"></div>
-    <script type="text/javascript">
-google.charts.setOnLoadCallback(drawSensor_Temp);
-// Callback that draws the pie chart for Anthony's pizza.
-function drawSensor_Temp() {
+<title>Sensor Temperature</title>
+<div id="placeholder" style="width:600px;height:300px"></div>
 
-    // Create the data table for Anthony's pizza.
-    var data = new google.visualization.DataTable();
-    data.addColumn('string', 'Topping');
-    data.addColumn('number', 'Slices');
-    data.addRows([
-        ['Mushrooms', 2],
-        ['Onions', 2],
-        ['Olives', 2],
-        ['Zucchini', 0],
-        ['Pepperoni', 3]
-    ]);
+<script type="text/javascript">
+io.socket.get('/temperature/subscribe', function(data, jwr) {
 
-    // Set options for Anthony's pie chart.
-    var options = {title:'How Much Pizza Anthony Ate Last Night',
-                   width:800,
-                   height:400};
+    var datanya = [{label:"cumi",data:[]}];
 
-    // Instantiate and draw the chart for Anthony's pizza.
-    var chart = new google.visualization.PieChart(document.getElementById('sensor-temperatur'));
-    chart.draw(data, options);
-}
-     </script>
+    io.socket.on('temperature', function(entry) {
+        tanggal = new Date(entry.createdAt);
+        if (datanya[0].data.length >15) {
+            datanya[0].data.shift();
+        }
+        datanya[0].data.push( [ tanggal.getSeconds(), parseInt(entry.value)  ]  )
+
+        var options = {
+            xaxis: {
+                tickDecimals: 0
+            },
+            yaxis: {
+                min: 0
+            },
+            legend: {
+                show:false
+            },
+            selection: {
+                mode: "x"
+            }
+        };
+
+        $.plot($("#placeholder"),  datanya , options);
+    })
+})
+</script>

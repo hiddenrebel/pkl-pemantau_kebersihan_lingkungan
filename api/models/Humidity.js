@@ -11,6 +11,10 @@ module.exports = {
 	  	sensor	: { type: 'string' },
 		value	: { type: 'string' },
 		satuan	: { type: 'string' }
-  }
+  },
+    afterCreate: function(entry, cb) {
+        sails.sockets.broadcast('feed', 'humidity', entry);
+        cb();
+    }
 };
 

@@ -1,12 +1,12 @@
-<title>Sensor Humidity</title>
-<div id="humidity" style="width:600px;height:300px"></div>
+<title>Sensor CO Level</title>
+<div id="airquality" style="width:600px;height:300px"></div>
 
 <script type="text/javascript">
-io.socket.get('/humidity/subscribe', function(data, jwr) {
+io.socket.get('/airquality/subscribe', function(data, jwr) {
 
     var datanya = [{label:"cumi",data:[]}];
 
-    io.socket.on('humidity', function(entry) {
+    io.socket.on('airquality', function(entry) {
         tanggal = new Date(entry.createdAt);
         if (datanya[0].data.length >15) {
             datanya[0].data.shift();
@@ -28,7 +28,7 @@ io.socket.get('/humidity/subscribe', function(data, jwr) {
             }
         };
 
-        $.plot($("#humidity"),  datanya , options);
+        $.plot($("#airquality"),  datanya , options);
     })
 })
 </script>
