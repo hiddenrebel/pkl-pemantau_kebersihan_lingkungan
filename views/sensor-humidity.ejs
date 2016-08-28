@@ -2,33 +2,122 @@
 <div id="humidity" style="width:600px;height:300px"></div>
 
 <script type="text/javascript">
-io.socket.get('/humidity/subscribe', function(data, jwr) {
 
-    var datanya = [{label:"cumi",data:[]}];
+// Gambar Dulu
+    $(function() {
+        var initd = false;
 
-    io.socket.on('humidity', function(entry) {
-        tanggal = new Date(entry.createdAt);
-        if (datanya[0].data.length >15) {
-            datanya[0].data.shift();
+        var data = [], totalPoints = 15;
+        var myticks = [];
+
+        function inits() {
+
+            if (data.length > 0) data = data.slice(1);
+
+            while (data.length < totalPoints) {
+
+                var prev = data.length > 0 ? data[data.length - 1] : 50, y = prev + Math.random() * 10 - 5;
+
+                y = 0;
+                data.push(y);
+            }
+
+            var res = [];
+            for (var i = 0; i < data.length; ++i) {
+                res.push([i, data[i]])
+            }
+
+            initd = true;
+            return res;
         }
-        datanya[0].data.push( [ tanggal.getSeconds(), parseInt(entry.value)  ]  )
 
-        var options = {
-            xaxis: {
-                tickDecimals: 0
+        function initTick() {
+
+            if (myticks.length > 0) myticks = myticks.slice(1);
+
+            while (myticks.length < totalPoints) {
+
+                var prev = myticks.length > 0 ? myticks[myticks.length - 1] : 50, y = prev + Math.random() * 10 - 5;
+
+                y = 0;
+                myticks.push(y);
+            }
+
+            var res = [];
+            for (var i = 0; i < myticks.length; ++i) {
+                res.push([i, myticks[i]])
+            }
+
+            initd = true;
+            return res;
+        }
+
+
+        function pushData(val) {
+            data = data.slice(1);
+            data.push(val);
+
+            var res = [];
+            for (var i = 0; i < data.length; ++i) {
+                res.push(
+                    [i, data[i]]
+                )
+            }
+
+            return res;
+        }
+
+
+        function pushTick(time) {
+            myticks = myticks.slice(1);
+
+            momen = moment( new Date( time ) ).format("HH:mm:ss");
+
+            console.log(momen);
+
+            myticks.push( momen );
+
+            var res = [];
+            for (var i = 0; i < myticks.length; ++i) {
+                res.push(
+                    [i, myticks[i]]
+                )
+            }
+
+            return res;
+        }
+
+        var plot = $.plot("#humidity", [ inits() ], {
+            series: {
+                shadowSize: 0   // Drawing is faster without shadows
             },
             yaxis: {
                 min: 0
             },
-            legend: {
-                show:false
-            },
-            selection: {
-                mode: "x"
+            xaxis: {
+                show: true,
+                ticks:myticks
             }
-        };
+        });
 
-        $.plot($("#humidity"),  datanya , options);
-    })
+        function update(val,time) {
+            
+            if( !initd )  plot.setData([inits()]);
+            else plot.setData( [ pushData(val) ]);
+            
+            plot.setupGrid()
+
+            plot.draw();
+            //setTimeout(update, 20);
+        }
+
+        update(0,0);
+
+        io.socket.get('/humidity/subscribe', function(data, jwr) {
+
+            io.socket.on('humidity', function(entry) {
+                update(entry.value,entry.createdAt);
+            })
+        })
 })
 </script>
