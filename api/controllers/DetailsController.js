@@ -61,7 +61,7 @@ module.exports = {
 			if (err) {
 			    return res.serverError(err);
 			}
-		  	return res.json(latestLocations);
+		  	return res.view(latestLocations);
 		});
 	}
 };

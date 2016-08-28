@@ -20,15 +20,9 @@
         [-6.242267, 106.835812, 4]
       ];
 
-      var image = {
-          url: 'https://mapicons.mapsmarker.com/wp-content/uploads/mapicons/shape-default/color-77eb65/shapecolor-color/shadow-1/border-dark/symbolstyle-white/symbolshadowstyle-dark/gradient-no/cloudy.png',
-          // This marker is 20 pixels wide by 32 pixels high.
-          size: new google.maps.Size(20, 32),
-          // The origin for this image is (0, 0).
-          origin: new google.maps.Point(0, 0),
-          // The anchor for this image is the base of the flagpole at (0, 32).
-          anchor: new google.maps.Point(0, 32)
-        };
+      var image = ["#9f51ff","#036084","#ffd651","#d0ff51","#F00"];
+      var tooltip = ["Smesco's Air Quality Level"];
+
 
       function setMarkers(map) {
         for (var i = 0; i < points.length; i++) {
@@ -36,7 +30,14 @@
           var marker = new google.maps.Marker({
             position: {lat: point[0], lng: point[1]},
             map: map,
-            icon: image,
+            title: tooltip[i],
+            icon: {
+                path: google.maps.SymbolPath.CIRCLE,
+                scale: 12,
+                fillColor: image[i],
+                fillOpacity: 0.8,
+                strokeWeight: 0.4
+            },
             zIndex: point[2]
           });
           marker.addListener('click', toggleBounce);
