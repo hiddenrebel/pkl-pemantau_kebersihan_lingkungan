@@ -13,24 +13,22 @@
       }
       // ambil dari mongo
       var points = [
-        [-6.242053, 106.836305, 1],
-        [-6.241936, 106.83626, 2],
-        [-6.241904, 106.835822, 3],
-        [-6.241979, 106.835404, 5],
-        [-6.242267, 106.835812, 4]
+        [1,-6.242053, 106.836305, 1],
+        [2,-6.241936, 106.83626, 2],
+        [3,-6.241904, 106.835822, 3],
+        [4,-6.241979, 106.835404, 5],
+        [5,-6.242267, 106.835812, 4]
       ];
 
       var image = ["#9f51ff","#036084","#ffd651","#d0ff51","#F00"];
-      var tooltip = ["Smesco's Air Quality Level"];
-
 
       function setMarkers(map) {
         for (var i = 0; i < points.length; i++) {
           var point = points[i];
           var marker = new google.maps.Marker({
-            position: {lat: point[0], lng: point[1]},
+            position: {lat: point[1], lng: point[2]},
             map: map,
-            title: tooltip[i],
+            title: point[0],
             icon: {
                 path: google.maps.SymbolPath.CIRCLE,
                 scale: 12,
@@ -38,7 +36,7 @@
                 fillOpacity: 0.8,
                 strokeWeight: 0.4
             },
-            zIndex: point[2]
+            zIndex: point[3]
           });
           marker.addListener('click', toggleBounce);
       }
