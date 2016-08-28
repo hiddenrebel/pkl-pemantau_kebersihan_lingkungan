@@ -1,6 +1,10 @@
 <title>Sensor Temperature</title>
-<h3>Sensor Suhu<h3>
-<div id="placeholder" style="width:600px;height:300px"></div>
+    <h3 class="center-align">Sensor Suhu<h3>
+
+    <div class="row">
+    <div class="col s6 offset-s4" id="temperature" style="width:600px;height:300px"></div>
+    </div>
+
 
 <script type="text/javascript">
 
@@ -102,10 +106,10 @@
         });
 
         function update(val,time) {
-            
+
             if( !initd )  plot.setData([inits()]);
             else plot.setData( [ pushData(val) ]);
-            
+
             plot.setupGrid()
 
             plot.draw();
